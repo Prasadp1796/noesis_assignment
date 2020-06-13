@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <% include ../partials/head.ejs%>
+        <title><%-title%></title>
+      </head>
+  <body ng-app="viewContactApp" ng-controller="viewContactAppController" ng-init="initController(<%-contactId%>)" ng-cloak>
+    <div class="container-fluid" id="wrapper">
+        <div class="card mt-2">
+            <div class="card-header bg-info">
+                <h5 class="text-center text-white">Contacts Details</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-4">
+                        <b>First Name:</b>
+                        <input type="text" class="form-control-plaintext"  value="{{contact.firstName== null ? 'NA': contact.firstName}}">
+                    </div>
+
+                    <div class="form-group col-4">
+                        <b>Middle Name:</b>
+                        <input type="text" class="form-control-plaintext"  value="{{contact.middleName== null ? 'NA': contact.middleName}}">
+                    </div>
+
+                    <div class="form-group col-4">
+                        <b>Last Name:</b>
+                        <input type="text" class="form-control-plaintext"  value="{{contact.lastName== null ? 'NA': contact.lastName}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-4">
+                        <b>Email Id:</b>
+                        <input type="text" class="form-control-plaintext" value="{{contact.email== null ? 'NA': contact.email}}">
+                    </div>
+
+                    <div class="form-group col-4">
+                        <b>Contact Number:</b>
+                        <input type="text" class="form-control-plaintext" value="{{contact.contact== null ? 'NA': contact.contact}}">
+                    </div>
+
+                    <div class="form-group col-4">
+                        <b>Telephone Number:</b>
+                        <input type="text" class="form-control-plaintext" value="{{contact.telephone== null ? 'NA': contact.telephone}}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-12">
+                        <b>Note</b>
+                        <input class="form-control-plaintext" value="{{contact.note== null ? 'NA': contact.note}}">
+                    </div>
+                </div>
+                <div class="row" style="width: 70% !important; margin-left: 10%;">
+                    <b>Views(Last 7 days)</b>
+                    <canvas id="line" class="chart-bar" data="data" chart-colors="colors"
+                    labels="labels">
+                  </canvas> 
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- body scripts loaded here -->
+    <%include ../partials/bodyScriptLoader.ejs%>
+
+
+    <!-- ng-app script loaded here -->
+    <script src="/js/viewContactDetails.js"></script>   
+  </body>
+</html>

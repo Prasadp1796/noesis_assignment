@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <% include ../partials/head.ejs%>
+        
+      </head>
+  <body ng-app="citiesApp" ng-controller="citiesAppController" ng-init="initController()">
+    <div class="container-fluid" id="wrapper">
+      
+        <div class="col-6 mx-auto mt-5 border border-secondary p-5">
+            <form method="POST" action="/login">
+                <h4 class="text-center text-primary">Log In Here</h4>
+                <%if(error){%>
+                    <h6 class="text-danger text-center"><%-errorMessage%></h6>
+                <%}%>
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email">
+                    </div>
+                    <div class="form-group col-12">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password">
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-block btn-primary" value="LogIn">
+            </form>
+                <a class="mx-auto" href="/register">Not An Account? Register Here</a>
+        </div>
+    
+    </div>
+
+ 
+  </body>
+</html>

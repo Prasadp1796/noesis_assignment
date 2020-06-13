@@ -1,0 +1,118 @@
+<script type="text/ng-template" id="modal.html">
+    <div id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+        <div class="modal-header bg-info">
+            <h5 id="exampleModalLabel"  class="modal-title text-light">{{contact.mode === 'add' ?'Add ': 'Edit '}} Contact</h5>
+        
+            <button type="button" data-dismiss="modal" aria-label="Close" class="close text-light" ng-click="close()"><span
+                        aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body" ng-cloak>
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-danger fade in alert-dismissible show" ng-repeat="errorMessage in errorMessages track by $index">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true" style="font-size:20px">×</span>
+                        </button>
+                        <strong>Duplication Error!</strong> {{errorMessage}}
+                    </div>
+                </div>
+            </div>
+            <div class="px-3">
+                <form class="form form-horizontal ng-pristine ng-valid" name="form">
+                    <div class="form-body">
+
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                <label class="label-control" for="firstName">First Name<span class="required"
+                                    style="color:red">*</span>:
+                                </label>
+                                <input type="text" id="firstName" class="form-control" name="firstName" ng-model="contact.firstName" placeholder="Enter First Name" required>
+                                <div ng-messages="form.firstName.$error" style="color:red" ng-if="form.firstName.$touched || isSubmitClicked" role="alert">
+                                    <div ng-message="required">Please Enter First Name</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md">
+                                <label class="label-control" for="middleName">Middle Name:</label>
+                                <input type="text" id="middleName" class="form-control" name="middleName" ng-model="contact.middleName" placeholder="Enter Middle Name">
+                            </div>
+                            <div class="form-group col-md">
+                                <label class="label-control" for="lastName">Last Name<span class="required"
+                                    style="color:red">*</span>:
+                                </label>
+                                <input type="text" id="lastName" class="form-control" name="lastName" ng-model="contact.lastName" placeholder="Enter Last Name" required>
+                                <div ng-messages="form.lastName.$error" style="color:red" ng-if="form.lastName.$touched || isSubmitClicked" role="alert">
+                                    <div ng-message="required">Please Enter Last Name</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                <label class="label-control" for="email">Email Id:
+                                </label>
+                                <input type="email" id="email" class="form-control" name="email" ng-model="contact.email" placeholder="Enter Email Id">
+                                <div ng-messages="form.email.$error" style="color:red" ng-if="form.email.$touched || isSubmitClicked" role="alert">
+                                    <div ng-message="email">Please Enter Valid Email Id</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md">
+                                <label class="label-control" for="contact">Contact Number:
+                                </label>
+                                <input type="text" id="contact" class="form-control" name="contact" ng-model="contact.contact" placeholder="Enter Contact Number" ng-pattern="/^[6-9][0-9]{9}$/">
+                                <div ng-messages="form.contact.$error" style="color:red" ng-if="form.contact.$touched || isSubmitClicked" role="alert">
+                                    <div ng-message="pattern">Please Enter Valid Contact</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md">
+                                <label class="label-control" for="telephone">Telephone Number:
+                                </label>
+                                <input type="text" id="telephone" class="form-control" name="telephone" ng-model="contact.telephone" placeholder="Enter Telephone Number" ng-pattern="/^\d{5}([- ]*)\d{6}$/">
+                                <div ng-messages="form.telephone.$error" style="color:red" ng-if="form.telephone.$touched || isSubmitClicked" role="alert">
+                                    <div ng-message="pattern">Please Enter Valid Telephone Number</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="from-group col-12">
+                                <label>Note:</label>
+                                <textarea class="form-control" name="note" id="note" ng-model="contact.note" rows="3"> </textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-row" ng-if="contact.mode == 'add'">
+                            <div class="form-group floating">
+                                <label for="file">Contact Images:</label>
+                                <input type="file" ngf-select ng-model="contact.myFiles" name="file" id="file"
+                                       ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB"
+                                       ngf-min-width="256" ngf-min-height="400"
+                                       ngf-resize="{width: 800, height: 800, centerCrop: true,  quality: 0.8}"
+                                       ngf-change="onFileSelected()" 
+                                       ngf-multiple="false"/>
+                                <div style="color:red"
+                                     role="alert" ng-if="form.file.$touched">
+                                    <span ng-show="form.file.$error.required">Please Select File</span><br>
+                                    <span ng-show="form.file.$error.maxSize">File too large
+                                                                {{up.file.size / 1000000|number:1}}MB: max 1MB</span>
+                                    <span ng-show="form.file.$error.pattern">Please Select Image File</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+    <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-raised btn-primary" ng-if="contact.mode=='add'" ng-click="uploadContactImage(form)">
+                <i class="fa fa-save"></i> Add Contact
+            </button>
+        <button type="button" class="btn btn-raised btn-warning text-light" ng-if="contact.mode=='edit'" ng-click="updateContactDetails(form)">
+                <i class="fa fa-edit"></i> Edit Contact
+            </button>
+        <button type="button" data-dismiss="modal" class="btn btn-raised btn-danger" ng-click="close()"><i
+                        class="fa fa-times"></i> Close
+            </button>
+    </div>
+    </div>
+</script>

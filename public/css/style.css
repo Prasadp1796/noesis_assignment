@@ -1,0 +1,16 @@
+/* Method To Blur Background When Modal Is Open */
+.modal-open #wrapper{
+    -webkit-filter: blur(10px) grayscale(20%) ;
+}
+
+.modal-dialog{
+    display: table;
+    position: relative;
+    width: 100%;
+    top: calc(20% - 24px); 
+}
+
+.modal-dialog .bg-transparent{
+    background-color: w;
+    border: none;
+}
