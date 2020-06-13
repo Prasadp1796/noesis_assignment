@@ -7,3 +7,5 @@ Steps To Run The Server
 5.For Log In Use This Email Id And Password:
     email: admin@admin.com 
     password: password
+
+6.For First Assignment Check The armstrongNumber.php file
